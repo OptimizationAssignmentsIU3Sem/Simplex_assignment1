@@ -60,6 +60,7 @@ def simplex(z: np.array, constr: np.array, b: np.array) -> np.array:
 
 
 if __name__ == "__main__":
+
     pass
     # z_f = np.array([9, 10, 16, 0, 0, 0])
     # cond = np.array([
