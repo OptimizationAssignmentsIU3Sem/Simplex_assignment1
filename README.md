@@ -1,2 +1,2 @@
-# Simplex_assignment1
+# Optimization assignment 1
 Simplex method for solving LPP
