@@ -59,7 +59,3 @@ class SimplexTestCase(unittest.TestCase):
         ans = simplex(z_f, cond, b_col)
         self.assertAlmostEqual(get_z_of_x(z_f, ans), correct_Z)
         [self.assertAlmostEqual(entry, correct_X[idx]) for idx, entry in enumerate(ans)]
-
-
-def run_tests():
-    unittest.main()

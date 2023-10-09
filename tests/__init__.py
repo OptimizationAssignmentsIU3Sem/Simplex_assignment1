@@ -1,1 +1,1 @@
-from .unittests import run_tests
+from .unittests import SimplexTestCase
