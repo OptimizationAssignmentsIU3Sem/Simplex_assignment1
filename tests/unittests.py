@@ -61,6 +61,5 @@ class SimplexTestCase(unittest.TestCase):
         [self.assertAlmostEqual(entry, correct_X[idx]) for idx, entry in enumerate(ans)]
 
 
-if __name__ == '__main__':
+def run_tests():
     unittest.main()
-
