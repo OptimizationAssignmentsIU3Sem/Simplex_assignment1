@@ -14,8 +14,8 @@ class SimplexTestCase(unittest.TestCase):
         z_f = np.array([9, 10, 16, 0, 0, 0])
         cond = np.array([
             [18, 15, 12, 1, 0, 0],
-            [6,  4,  8,  0, 1, 0],
-            [5,  3,  3,  0, 0, 1]
+            [6, 4, 8, 0, 1, 0],
+            [5, 3, 3, 0, 0, 1]
         ])
         b_col = np.array([360, 192, 180])
 
@@ -32,9 +32,9 @@ class SimplexTestCase(unittest.TestCase):
 
         z_f = np.array([0, 8, 0, 7, 0, 1])
         cond = np.array([
-            [1, -2, 0, -3,  0, -2],
-            [0,  4, 1, -4,  0, -3],
-            [0,  5, 0,  5,  1,  1]
+            [1, -2, 0, -3, 0, -2],
+            [0, 4, 1, -4, 0, -3],
+            [0, 5, 0, 5, 1, 1]
         ])
         b_col = np.array([12, 12, 25])
         # ------------(assertion)---------#
@@ -46,14 +46,14 @@ class SimplexTestCase(unittest.TestCase):
     def testCase3(self):
         # ___________(data)______________ #
 
-        correct_X = [10/11, 72/11, 0, 0, 0, 456/11]
-        correct_Z = 226/11
+        correct_X = [10 / 11, 72 / 11, 0, 0, 0, 456 / 11]
+        correct_Z = 226 / 11
 
         z_f = np.array([1, 3, 0, -5, 0, 0])
         cond = np.array([
-            [2,  4, 1, 2,  0, 0],
-            [-3,  5, 0, -3,  1, 0],
-            [4,  -2, 0,  8,  0,  1]
+            [2, 4, 1, 2, 0, 0],
+            [-3, 5, 0, -3, 1, 0],
+            [4, -2, 0, 8, 0, 1]
         ])
         b_col = np.array([28, 30, 32])
         # ------------(assertion)---------#
@@ -80,8 +80,8 @@ class SimplexTestCase(unittest.TestCase):
     def testCase5(self):
         z_f = np.array([4, 1, 0, 0])  # Coefficients of the objective function
         cond = np.array([
-            [1, 2, 1, 0],   # Coefficients for x + 2y ≤ 6
-            [2, 3, 0, 1]    # Coefficients for 2x + 3y ≤ 12
+            [1, 2, 1, 0],  # Coefficients for x + 2y ≤ 6
+            [2, 3, 0, 1]  # Coefficients for 2x + 3y ≤ 12
         ])
         b_col = np.array([6, 12])  # Right-hand side values for constraints
 
@@ -97,8 +97,8 @@ class SimplexTestCase(unittest.TestCase):
     def testCase6(self):
         z_f = np.array([2, 3, 0, 0])  # Coefficients of the objective function
         cond = np.array([
-            [1, 3, 1, 0],   # Coefficients for x + 3y ≤ 9
-            [3, 2, 0, 1]    # Coefficients for 3x + 2y ≤ 12
+            [1, 3, 1, 0],  # Coefficients for x + 3y ≤ 9
+            [3, 2, 0, 1]  # Coefficients for 3x + 2y ≤ 12
         ])
         b_col = np.array([9, 12])  # Right-hand side values for constraints
 
@@ -116,8 +116,8 @@ class SimplexTestCase(unittest.TestCase):
     def testCase7(self):
         z_f = np.array([3, 1, 0, 0])  # Coefficients of the objective function
         cond = np.array([
-            [2, 2, 1, 0],   # Coefficients for 2x + 2y ≤ 10
-            [1, 1, 0, 1]    # Coefficients for x + y ≤ 6
+            [2, 2, 1, 0],  # Coefficients for 2x + 2y ≤ 10
+            [1, 1, 0, 1]  # Coefficients for x + y ≤ 6
         ])
         b_col = np.array([10, 6])
 
@@ -134,7 +134,7 @@ class SimplexTestCase(unittest.TestCase):
         # Coefficients of the objective function
         z_f = np.array([1, 2, 3, 4, 0, 0, 0, 0])
         cond = np.array([
-            [1, 1, 1, 1, 1, 0, 0, 0],   # Coefficients for x1 + x2 + x3 + x4 ≤ 40
+            [1, 1, 1, 1, 1, 0, 0, 0],  # Coefficients for x1 + x2 + x3 + x4 ≤ 40
             # Coefficients for 2x1 + x2 + x3 + 3x4 ≤ 50
             [2, 1, 1, 3, 0, 1, 0, 0],
             # Coefficients for x1 + x2 + 2x3 + 2x4 ≤ 45
@@ -218,7 +218,7 @@ class SimplexTestCase(unittest.TestCase):
     def testCaseUnbounded1(self):
         z_f = np.array([5, 4, 0, 0])
         cond = np.array([
-            [1,  0, 1, 0],
+            [1, 0, 1, 0],
             [1, -1, 0, 1],
         ])
         b_col = np.array([7, 8])
@@ -231,8 +231,8 @@ class SimplexTestCase(unittest.TestCase):
     def testCaseDegeneracy1(self):
         z_f = np.array([1, 0, 0])
         cond = np.array([
-            [1,  1, 0],
-            [1,  0, 1],
+            [1, 1, 0],
+            [1, 0, 1],
         ])
         b_col = np.array([1, 1])
         correct_Z = 1
@@ -242,8 +242,7 @@ class SimplexTestCase(unittest.TestCase):
         self.assertAlmostEqual(get_z_of_x(z_f, ans), correct_Z)
         [self.assertAlmostEqual(entry, correct_X[idx]) for idx, entry in enumerate(ans)]
 
-
-def testCaseDegeneracy2(self):
+    def testCaseDegeneracy2(self):
         z_f = np.array([3, 9, 0, 0])
         cond = np.array([
             [1, 4, 1, 0],
@@ -255,8 +254,24 @@ def testCaseDegeneracy2(self):
         correct_X = [0, 2, 0, 0]
 
         ans = simplex(z_f, cond, b_col, self.alpha)
+
         self.assertAlmostEqual(get_z_of_x(z_f, ans), correct_Z)
         [self.assertAlmostEqual(entry, correct_X[idx]) for idx, entry in enumerate(ans)]
+
+    def testCaseAlternativeOptima1(self):  # The simplex will find an optima
+        z_f = np.array([2, 4, 0, 0])
+        cond = np.array([
+            [1, 2, 1, 0],
+            [1, 1, 0, 1],
+        ])
+        b_col = np.array([5, 4])
+
+        correct_Z = 10
+        correct_X = [3, 1, 0, 0]
+
+        ans = simplex(z_f, cond, b_col, self.alpha)
+        self.assertAlmostEqual(get_z_of_x(z_f, ans), correct_Z)
+        # [self.assertAlmostEqual(entry, correct_X[idx]) for idx, entry in enumerate(ans)]
 
 
 def run_tests():

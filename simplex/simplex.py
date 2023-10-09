@@ -39,6 +39,7 @@ def simplex(z: np.array, constr: np.array, b: np.array, alpha: float) -> np.arra
         B_i_inv = np.around(np.linalg.inv(B_i), alpha)
 
         z_row = np.dot(np.dot(C_b, B_i_inv), P) - np.array([z[i] for i in non_basic])
+
         b_i = np.dot(B_i_inv, b)
         if any([i == 0 for i in b_i]):
             print("Warning ! This LPP is degenerate!")
