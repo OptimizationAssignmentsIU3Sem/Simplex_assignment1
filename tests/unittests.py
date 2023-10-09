@@ -215,4 +215,10 @@ class SimplexTestCase(unittest.TestCase):
 
 
 def run_tests():
+    # unittest.main()
+    suite = unittest.TestLoader().loadTestsFromModule()
+    unittest.TextTestRunner(verbosity=2).run(suite)
+
+
+if __name__ == '__main__':
     unittest.main()
