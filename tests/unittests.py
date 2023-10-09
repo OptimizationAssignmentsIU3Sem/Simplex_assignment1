@@ -4,6 +4,8 @@ from simplex import simplex, get_z_of_x
 
 
 class SimplexTestCase(unittest.TestCase):
+    alpha = 12
+
     def testCase1(self):  # test method names begin with 'test'
         # ___________(data)______________ #
 
@@ -18,7 +20,7 @@ class SimplexTestCase(unittest.TestCase):
         b_col = np.array([360, 192, 180])
 
         # ------------(assertion)---------#
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
         self.assertAlmostEqual(get_z_of_x(z_f, ans), correct_Z)
         [self.assertAlmostEqual(entry, correct_X[idx]) for idx, entry in enumerate(ans)]
 
@@ -37,7 +39,7 @@ class SimplexTestCase(unittest.TestCase):
         b_col = np.array([12, 12, 25])
         # ------------(assertion)---------#
 
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
         self.assertAlmostEqual(get_z_of_x(z_f, ans), correct_Z)
         [self.assertAlmostEqual(entry, correct_X[idx]) for idx, entry in enumerate(ans)]
 
@@ -56,7 +58,7 @@ class SimplexTestCase(unittest.TestCase):
         b_col = np.array([28, 30, 32])
         # ------------(assertion)---------#
 
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
         self.assertAlmostEqual(get_z_of_x(z_f, ans), correct_Z)
         [self.assertAlmostEqual(entry, correct_X[idx]) for idx, entry in enumerate(ans)]
 
@@ -70,7 +72,7 @@ class SimplexTestCase(unittest.TestCase):
         ])
         b_col = np.array([4, 6])
         # Assertions
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
         self.assertAlmostEqual(get_z_of_x(z_f, ans), correct_Z)
         [self.assertAlmostEqual(entry, correct_X[idx])
          for idx, entry in enumerate(ans)]
@@ -83,7 +85,7 @@ class SimplexTestCase(unittest.TestCase):
         ])
         b_col = np.array([6, 12])  # Right-hand side values for constraints
 
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
 
         correct_X = [6, 0, 0, 0]
         correct_Z = 24
@@ -101,7 +103,7 @@ class SimplexTestCase(unittest.TestCase):
         b_col = np.array([9, 12])  # Right-hand side values for constraints
 
         # Call
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
 
         correct_X = [2.57, 2.14, 0, 0]
         correct_Z = 11.57
@@ -119,7 +121,7 @@ class SimplexTestCase(unittest.TestCase):
         ])
         b_col = np.array([10, 6])
 
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
 
         correct_X = [5, 0, 0, 1]
         correct_Z = 15
@@ -141,7 +143,7 @@ class SimplexTestCase(unittest.TestCase):
         b_col = np.array([40, 50, 45])
 
         #
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
 
         correct_X = [0, 35, 0, 5, 0, 0, 0, 0]
         correct_Z = 90
@@ -166,7 +168,7 @@ class SimplexTestCase(unittest.TestCase):
         b_col = np.array([30, 40, 35])
 
         # Call
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
 
         # Illustrative solution is x1=5, x2=10, x3=5, x4=5
         correct_X = [10, 0, 15, 0, 5, 0, 0, 0]
@@ -186,7 +188,7 @@ class SimplexTestCase(unittest.TestCase):
         ])
         b_col = np.array([20, 25, 30])
 
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
 
         correct_X = [10, 5, 0, 0, 5, 0, 0, 0]
         correct_Z = 35
@@ -204,7 +206,7 @@ class SimplexTestCase(unittest.TestCase):
         ])
         b_col = np.array([15, 18, 20])
 
-        ans = simplex(z_f, cond, b_col)
+        ans = simplex(z_f, cond, b_col, self.alpha)
 
         correct_X = [0, 0, 0, 10, 5, 8, 0, 0]
         correct_Z = 40
@@ -215,9 +217,7 @@ class SimplexTestCase(unittest.TestCase):
 
 
 def run_tests():
-    # unittest.main()
-    suite = unittest.TestLoader().loadTestsFromModule()
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    unittest.main()
 
 
 if __name__ == '__main__':

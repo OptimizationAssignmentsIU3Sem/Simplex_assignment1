@@ -1,7 +1,7 @@
-from tests import run_tests
+from tests import tester
 
 TEST = True
 
 if __name__ == "__main__":
     if TEST:
-        run_tests()
+        tester()

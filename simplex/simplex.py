@@ -21,7 +21,7 @@ def get_nonbasic(basic: List, n: int):
     return list(set(range(n)) - set(basic))
 
 
-def simplex(z: np.array, constr: np.array, b: np.array) -> np.array:
+def simplex(z: np.array, constr: np.array, b: np.array, alpha: float) -> np.array:
     """method for maximization of z-function subject to given constrains."""
 
     basic = choose_basic(constr)
@@ -36,7 +36,7 @@ def simplex(z: np.array, constr: np.array, b: np.array) -> np.array:
         B_i = np.transpose(B_i)
         P = np.array([constr[:, i] for i in non_basic])
         P = np.transpose(P)
-        B_i_inv = np.linalg.inv(B_i)
+        B_i_inv = np.around(np.linalg.inv(B_i), alpha)
 
         z_row = np.dot(np.dot(C_b, B_i_inv), P) - np.array([z[i] for i in non_basic])
         b_i = np.dot(B_i_inv, b)
@@ -50,7 +50,7 @@ def simplex(z: np.array, constr: np.array, b: np.array) -> np.array:
             return res
 
         entering = np.argmin(z_row)
-        B_inv_P = np.dot(B_i_inv, constr[:, non_basic[entering]])
+        B_inv_P = np.around(np.dot(B_i_inv, constr[:, non_basic[entering]]), alpha)
         minimal_arg = 0
         curmin = 999999999999999999999999
         for idx, i in enumerate(B_inv_P):
