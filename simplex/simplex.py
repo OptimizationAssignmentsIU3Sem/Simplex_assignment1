@@ -40,6 +40,9 @@ def simplex(z: np.array, constr: np.array, b: np.array, alpha: float) -> np.arra
 
         z_row = np.dot(np.dot(C_b, B_i_inv), P) - np.array([z[i] for i in non_basic])
         b_i = np.dot(B_i_inv, b)
+        if any([i == 0 for i in b_i]):
+            print("Warning ! This LPP is degenerate!")
+
         x = np.dot(B_i_inv, b)
         z_ = np.dot(C_b, x)
 
@@ -51,6 +54,10 @@ def simplex(z: np.array, constr: np.array, b: np.array, alpha: float) -> np.arra
 
         entering = np.argmin(z_row)
         B_inv_P = np.around(np.dot(B_i_inv, constr[:, non_basic[entering]]), alpha)
+
+        if all([i <= 0 for i in B_inv_P]):
+            raise ValueError("The solution is unbounded!")
+
         minimal_arg = 0
         curmin = 999999999999999999999999
         for idx, i in enumerate(B_inv_P):

@@ -223,11 +223,40 @@ class SimplexTestCase(unittest.TestCase):
         ])
         b_col = np.array([7, 8])
 
-        # self.assertRaises(ValueError, )
         with self.assertRaises(ValueError) as context:
             simplex(z_f, cond, b_col, self.alpha)
 
         self.assertTrue("The solution is unbounded!" in str(context.exception))
+
+    def testCaseDegeneracy1(self):
+        z_f = np.array([1, 0, 0])
+        cond = np.array([
+            [1,  1, 0],
+            [1,  0, 1],
+        ])
+        b_col = np.array([1, 1])
+        correct_Z = 1
+        correct_X = [1, 0, 0]
+
+        ans = simplex(z_f, cond, b_col, self.alpha)
+        self.assertAlmostEqual(get_z_of_x(z_f, ans), correct_Z)
+        [self.assertAlmostEqual(entry, correct_X[idx]) for idx, entry in enumerate(ans)]
+
+
+def testCaseDegeneracy2(self):
+        z_f = np.array([3, 9, 0, 0])
+        cond = np.array([
+            [1, 4, 1, 0],
+            [1, 2, 0, 1],
+        ])
+        b_col = np.array([8, 4])
+
+        correct_Z = 18
+        correct_X = [0, 2, 0, 0]
+
+        ans = simplex(z_f, cond, b_col, self.alpha)
+        self.assertAlmostEqual(get_z_of_x(z_f, ans), correct_Z)
+        [self.assertAlmostEqual(entry, correct_X[idx]) for idx, entry in enumerate(ans)]
 
 
 def run_tests():
