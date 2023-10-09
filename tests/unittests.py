@@ -215,6 +215,20 @@ class SimplexTestCase(unittest.TestCase):
         [self.assertAlmostEqual(entry, correct_X[idx], places=2)
          for idx, entry in enumerate(ans)]
 
+    def testCaseUnbounded1(self):
+        z_f = np.array([5, 4, 0, 0])
+        cond = np.array([
+            [1,  0, 1, 0],
+            [1, -1, 0, 1],
+        ])
+        b_col = np.array([7, 8])
+
+        # self.assertRaises(ValueError, )
+        with self.assertRaises(ValueError) as context:
+            simplex(z_f, cond, b_col, self.alpha)
+
+        self.assertTrue("The solution is unbounded!" in str(context.exception))
+
 
 def run_tests():
     unittest.main()
