@@ -6,34 +6,17 @@ BLUE = '\033[34m'
 RESET = '\033[0m'
 
 
-def input_lpp() -> tuple[bool, np.array, np.matrix, np.array, float]:
+def input_lpp() -> tuple[np.array, np.array, np.array, int]:
     """
     Function reads input and returns
         1) maximize or minimize - true or false correspondingly.
         1) vector of coefficients of objective function - C.
         2) A matrix of coefficients of constraint function - A.
         3) A vector of right-hand side numbers - b.
-        4) The approximation accuracy - eps.
+        4) The number of digits after comma - alpha.
     """
 
-    print(BLUE + f"Enter \"{GREEN}yes{BLUE}\" if the goal is to maximize and \"{RED}no{BLUE}\" if to minimize")
-
-    maximize = True
-    while True:
-        input_args = input().split()
-        if len(input_args) != 1:
-            print(RED + "Only one argument is required, please re-enter your answer" + BLUE)
-            continue
-        if input_args[0] == "yes":
-            maximize = True
-            break
-        elif input_args[0] == "no":
-            maximize = False
-            break
-        else:
-            print(RED + f"The input {RED}\"{input_args[0]}\"{BLUE} is not yes or no, please re-enter" + BLUE)
-
-    print("Enter the number of variables")
+    print(BLUE + "Enter the number of variables")
 
     var_count = 0
     while True:
@@ -68,8 +51,9 @@ def input_lpp() -> tuple[bool, np.array, np.matrix, np.array, float]:
     while True:
         try:
             input_args = input().split()
-            if len(input_args) != var_count + constr_count:
-                print(RED + f"You need to enter exactly {var_count + constr_count} coefficients, not {len(input_args)}")
+            input_args_len = len(input_args)
+            if input_args_len != var_count + constr_count:
+                print(RED + f"You need to enter exactly {var_count + constr_count} coefficients, not {input_args_len}")
                 print(BLUE + "Please re-enter the coefficients")
             var_list = list(map(float, input_args))
             c = np.array(var_list)
@@ -88,10 +72,10 @@ def input_lpp() -> tuple[bool, np.array, np.matrix, np.array, float]:
                 input_str = input().split()
                 if len(input_str) != var_count + constr_count:
                     print(RED + f'You need to enter exactly {var_count + constr_count} coefficients,'
-                                ' not {len(input_args)}' + BLUE)
-                temp = np.array(list(map(float, input_str)))
+                                f' not {len(input_str)}' + BLUE)
+                temp = list(map(float, input_str))
                 a.append(temp)
-            a = np.matrix(a)
+            a = np.array(a)
             break
         except ValueError as e:
             print(RED + f"Failed to make a conversion into floats: {e}" + BLUE)
@@ -103,17 +87,18 @@ def input_lpp() -> tuple[bool, np.array, np.matrix, np.array, float]:
     while True:
         try:
             input_args = input().split()
-            if len(input_args) != constr_count:
-                print(RED + f"You need to enter exactly {constr_count} coefficients, not {len(input_args)}" + BLUE)
+            input_args_len = len(input_args)
+            if input_args_len != constr_count:
+                print(RED + f"You need to enter exactly {constr_count} coefficients, not {input_args_len}" + BLUE)
                 print("Please re-enter the coefficients")
             var_list = list(map(float, input_args))
-            var_list.extend([0 for _ in range(constr_count)])
             b = np.array(var_list)
             break
         except ValueError as e:
             print(RED + f"Failed to make a conversion into floats: {e}" + BLUE)
 
     print("Enter the approximation accuracy you want")
+    print(f"It's is recommended to use {GREEN}0.001{BLUE} precision or better to avoid false-degeneration of solution")
 
     eps = 0.0
     while True:
@@ -126,8 +111,12 @@ def input_lpp() -> tuple[bool, np.array, np.matrix, np.array, float]:
             break
         except ValueError as e:
             print(RED + f"Failed to make a conversion for epsilon: {e}" + BLUE)
+    alpha = 0
+    while eps < 1:
+        alpha += 1
+        eps *= 10
 
-    return maximize, c, a, b, eps
+    return c, a, b, alpha
 
 
 def output_not_applicable_error() -> None:
@@ -137,4 +126,9 @@ def output_not_applicable_error() -> None:
 def output_lpp(x: np.array, result_value: float) -> None:
     """outputs the vector of decision variables and maximum (minimum) value of the objective function"""
     print(f"The resulting vector of decision variables is: \n{GREEN}{x}{BLUE}")
-    print(f"And it produced the final value of: {result_value}")
+    print(f"And it produced the final value of: {GREEN}{result_value}{BLUE}")
+
+
+def print_error(msg: str) -> None:
+    """prints the red-colored msg in stdout"""
+    print(f"{RED}{msg}{BLUE}")

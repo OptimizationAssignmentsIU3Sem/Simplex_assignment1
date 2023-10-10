@@ -1,13 +1,12 @@
-from typing import List
-
 import numpy as np
+from lpp_io import print_error
 
 
 def get_z_of_x(z: np.array, x: np.array) -> float:
     return np.dot(z, x)
 
 
-def choose_basic(constr: np.array) -> List:
+def choose_basic(constr: np.array) -> list:
     basics = [0 for _ in range(len(constr))]
     for pivot in range(len(constr)):
         for column in range(len(constr[0])):
@@ -17,11 +16,11 @@ def choose_basic(constr: np.array) -> List:
     return basics
 
 
-def get_nonbasic(basic: List, n: int):
+def get_nonbasic(basic: list, n: int):
     return list(set(range(n)) - set(basic))
 
 
-def simplex(z: np.array, constr: np.array, b: np.array, alpha: float) -> np.array:
+def simplex(z: np.array, constr: np.array, b: np.array, alpha: int) -> np.array:
     """method for maximization of z-function subject to given constrains."""
 
     basic = choose_basic(constr)
@@ -42,7 +41,7 @@ def simplex(z: np.array, constr: np.array, b: np.array, alpha: float) -> np.arra
 
         b_i = np.dot(B_i_inv, b)
         if any([i == 0 for i in b_i]):
-            print("Warning ! This LPP is degenerate!")
+            print_error("Warning ! This LPP is degenerate!")
 
         x = np.dot(B_i_inv, b)
         z_ = np.dot(C_b, x)
